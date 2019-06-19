@@ -16,7 +16,7 @@ class Board {
 
   setupBoard() {
     this.placeSnake();
-    this.placeApple(this.apple);
+    this.placeApple();
   }
 
   updateBoard() {
@@ -26,7 +26,7 @@ class Board {
 
     if (!this.gameOver()) {
       this.placeSnake();
-      this.placeApple(this.apple);
+      this.placeApple();
     }
   }
 
@@ -41,8 +41,8 @@ class Board {
     });
   }
 
-  placeApple(pos) {
-    const [y, x] = pos;
+  placeApple() {
+    const [y, x] = this.apple;
 
     this.board[y][x] = 'A';
   }
@@ -65,8 +65,20 @@ class Board {
     }
   }
 
+  snakeCollision() {
+    const head = this.snake.segments[0];
+    
+    for (let i = 1; i < this.snake.segments.length; i++) {
+      if (Board.sameLoc(this.snake.segments[i], head)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   gameOver() {
-    return Board.outOfBounds(this.snake.segments[0]);
+    return Board.outOfBounds(this.snake.segments[0]) || this.snakeCollision();
   }
 
   static outOfBounds(pos) {

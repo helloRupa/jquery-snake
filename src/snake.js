@@ -9,7 +9,6 @@ const dirs = {
 class Snake {
   constructor(pos) {
     this.dir = dirs.up;
-    // this.head = pos;
 
     // head is always at 0, tail at length - 1
     this.segments = [pos];
@@ -20,7 +19,6 @@ class Snake {
 
     this.segments.unshift([head[0] + this.dir[0], head[1] + this.dir[1]]);
     this.segments.pop();
-    // this.head = [this.head[0] + this.dir[0], this.head[1] + this.dir[1]];
   }
 
   setDir(dir) {
