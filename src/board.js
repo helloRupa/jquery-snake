@@ -1,23 +1,43 @@
-const Snake = require('./snake');
+// const Snake = require('./snake');
+const pixels = 20;
 
 class Board {
-  constructor($el) {
-    this.$display = $el;
-    this.board = Array(20).fill(Array(20).fill(null));
-    this.snake = new Snake(Snake.randomDirection());
+  constructor() {
+    this.board = Array(pixels).fill(null).map(row => Array(pixels).fill(null));
+    // this.snake = new Snake(Snake.randomDirection());
     this.setupBoard();
   }
 
   setupBoard() {
-    let $ul = $('<ul></ul>');
+    const snakeLoc = Board.randomLocation();
+    let appleLoc = Board.randomLocation();
 
-    this.board.forEach((el) => {
-      $ul.append($('<li></li>'));
-    });
+    while (appleLoc.join('') === snakeLoc.join('')) {
+      appleLoc = Board.randomLocation();
+    }
 
-    this.board.forEach((el) => {
-      this.$display.append($ul.clone());
-    });
+    this.placeSnake(snakeLoc);
+    this.placeApple(appleLoc);
+  }
+
+  placeSnake(pos) {
+    const [y, x] = pos;
+
+    this.board[y][x] = 'S';
+  }
+
+  placeApple(pos) {
+    const [y, x] = pos;
+
+    this.board[y][x] = 'A';
+  }
+
+  static randomLocation() {
+    return [this.randomVal(), this.randomVal()];
+  }
+
+  static randomVal() {
+    return Math.floor(Math.random() * pixels);
   }
 }
 

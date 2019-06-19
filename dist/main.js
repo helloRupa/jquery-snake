@@ -91,9 +91,9 @@
   !*** ./src/board.js ***!
   \**********************/
 /*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-eval("const Snake = __webpack_require__(/*! ./snake */ \"./src/snake.js\");\n\nclass Board {\n  constructor($el) {\n    this.$display = $el;\n    this.board = Array(20).fill(Array(20).fill(null));\n    this.snake = new Snake(Snake.randomDirection());\n    this.setupBoard();\n  }\n\n  setupBoard() {\n    let $ul = $('<ul></ul>');\n\n    this.board.forEach((el) => {\n      $ul.append($('<li></li>'));\n    });\n\n    this.board.forEach((el) => {\n      this.$display.append($ul.clone());\n    });\n  }\n}\n\nmodule.exports = Board;\n\n\n//# sourceURL=webpack:///./src/board.js?");
+eval("// const Snake = require('./snake');\nconst pixels = 20;\n\nclass Board {\n  constructor() {\n    this.board = Array(pixels).fill(null).map(row => Array(pixels).fill(null));\n    // this.snake = new Snake(Snake.randomDirection());\n    this.setupBoard();\n  }\n\n  setupBoard() {\n    const snakeLoc = Board.randomLocation();\n    let appleLoc = Board.randomLocation();\n\n    while (appleLoc.join('') === snakeLoc.join('')) {\n      appleLoc = Board.randomLocation();\n    }\n\n    this.placeSnake(snakeLoc);\n    this.placeApple(appleLoc);\n  }\n\n  placeSnake(pos) {\n    const [y, x] = pos;\n\n    this.board[y][x] = 'S';\n  }\n\n  placeApple(pos) {\n    const [y, x] = pos;\n\n    this.board[y][x] = 'A';\n  }\n\n  static randomLocation() {\n    return [this.randomVal(), this.randomVal()];\n  }\n\n  static randomVal() {\n    return Math.floor(Math.random() * pixels);\n  }\n}\n\nmodule.exports = Board;\n\n\n//# sourceURL=webpack:///./src/board.js?");
 
 /***/ }),
 
@@ -104,7 +104,7 @@ eval("const Snake = __webpack_require__(/*! ./snake */ \"./src/snake.js\");\n\nc
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Snake = __webpack_require__(/*! ./snake */ \"./src/snake.js\");\nconst Board = __webpack_require__(/*! ./board */ \"./src/board.js\");\n\n$(() => {\n  const board = new Board($('#game'));\n});\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("const View = __webpack_require__(/*! ./view */ \"./src/view.js\");\nconst Snake = __webpack_require__(/*! ./snake */ \"./src/snake.js\");\nconst Board = __webpack_require__(/*! ./board */ \"./src/board.js\");\n\n$(() => {\n  const view = new View($('#game'));\n});\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -116,6 +116,17 @@ eval("const Snake = __webpack_require__(/*! ./snake */ \"./src/snake.js\");\ncon
 /***/ (function(module, exports) {
 
 eval("const dirs = ['N', 'S', 'W', 'E'];\n\nclass Snake {\n  constructor(dir) {\n    this.dir = dir;\n    this.size = 1;\n  }\n\n  static randomDirection() {\n    const choice = Math.floor(Math.random() * dirs.length);\n    return dirs[choice];\n  }\n}\n\nmodule.exports = Snake;\n\n\n//# sourceURL=webpack:///./src/snake.js?");
+
+/***/ }),
+
+/***/ "./src/view.js":
+/*!*********************!*\
+  !*** ./src/view.js ***!
+  \*********************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const Board = __webpack_require__(/*! ./board */ \"./src/board.js\");\n\nclass View {\n  constructor($el) {\n    this.$display = $el;\n    this.board = new Board();\n    this.setupBoard();\n  }\n\n  setupBoard() {\n    this.board.board.forEach((row) => {\n      let $ul = $('<ul></ul>');\n\n      row.forEach((space) => {\n        if (space === 'S') {\n          $ul.append('<li class=\"snake\"></li>');\n        } else if (space === 'A') {\n          $ul.append('<li class=\"apple\"></li>');\n        } else {\n          $ul.append('<li></li>');\n        }\n      });\n\n      this.$display.append($ul);\n    });\n\n    // this.board.board.forEach((el) => {\n    //   $ul.append($('<li></li>'));\n    // });\n\n    // this.board.board.forEach((el) => {\n    //   this.$display.append($ul.clone());\n    // });\n  }\n}\n\nmodule.exports = View;\n\n\n//# sourceURL=webpack:///./src/view.js?");
 
 /***/ })
 

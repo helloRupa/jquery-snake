@@ -1,6 +1,7 @@
+const View = require('./view');
 const Snake = require('./snake');
 const Board = require('./board');
 
 $(() => {
-  const board = new Board($('#game'));
+  const view = new View($('#game'));
 });
