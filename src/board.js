@@ -34,7 +34,7 @@ class Board {
   // Never start game with snake on edge
   static snakeLocation() {
     let [y, x] = this.randomLocation();
-    const limits = [0, pixels - 1];
+    const limits = Board.getLimits();
 
     while (limits.includes(y) || limits.includes(x)) {
       [y, x] = this.randomLocation();
@@ -49,6 +49,14 @@ class Board {
 
   static randomVal() {
     return Math.floor(Math.random() * pixels);
+  }
+
+  static getPixels() {
+    return pixels;
+  }
+
+  static getLimits() {
+    return [0, pixels - 1];
   }
 }
 
