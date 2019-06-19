@@ -4,10 +4,13 @@ class View {
   constructor($el) {
     this.$display = $el;
     this.board = new Board();
-    this.setupBoard();
+    this.render();
+    this.render();
   }
 
-  setupBoard() {
+  render() {
+    this.$display.html('');
+
     this.board.board.forEach((row) => {
       let $ul = $('<ul></ul>');
 
@@ -23,14 +26,6 @@ class View {
 
       this.$display.append($ul);
     });
-
-    // this.board.board.forEach((el) => {
-    //   $ul.append($('<li></li>'));
-    // });
-
-    // this.board.board.forEach((el) => {
-    //   this.$display.append($ul.clone());
-    // });
   }
 }
 
