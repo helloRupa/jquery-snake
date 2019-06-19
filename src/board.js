@@ -1,22 +1,36 @@
 const Snake = require('./snake');
 const pixels = 20;
+const limits = [0, pixels - 1];
 
 class Board {
   constructor() {
-    this.board = Array(pixels).fill(null).map(row => Array(pixels).fill(null));
+    this.board = this.emptyBoard();
     this.snake = new Snake(Board.snakeLocation());
+    this.apple = Board.randomLocation();
     this.setupBoard();
   }
 
-  setupBoard() {
-    let appleLoc = Board.randomLocation();
+  emptyBoard() {
+    return Array(pixels).fill(null).map(row => Array(pixels).fill(null));
+  }
 
-    while (appleLoc.join('') === this.snake.head.join('')) {
-      appleLoc = Board.randomLocation();
+  setupBoard() {
+    while (this.apple.join('') === this.snake.head.join('')) {
+      this.apple = Board.randomLocation();
     }
 
     this.placeSnake(this.snake.head);
-    this.placeApple(appleLoc);
+    this.placeApple(this.apple);
+  }
+
+  updateBoard() {
+    this.board = this.emptyBoard();
+    this.snake.move();
+
+    if (!this.gameOver()) {
+      this.placeSnake(this.snake.head);
+      this.placeApple(this.apple);
+    }
   }
 
   placeSnake(pos) {
@@ -31,10 +45,15 @@ class Board {
     this.board[y][x] = 'A';
   }
 
-  // Never start game with snake on edge
+  gameOver() {
+    const [y, x] = this.snake.head;
+
+    return y < 0 || x < 0 || x >= pixels || y >= pixels;
+  }
+
+  // Never start game with snake on edge cuz kindness
   static snakeLocation() {
     let [y, x] = this.randomLocation();
-    const limits = Board.getLimits();
 
     while (limits.includes(y) || limits.includes(x)) {
       [y, x] = this.randomLocation();
@@ -49,14 +68,6 @@ class Board {
 
   static randomVal() {
     return Math.floor(Math.random() * pixels);
-  }
-
-  static getPixels() {
-    return pixels;
-  }
-
-  static getLimits() {
-    return [0, pixels - 1];
   }
 }
 

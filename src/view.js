@@ -4,8 +4,21 @@ class View {
   constructor($el) {
     this.$display = $el;
     this.board = new Board();
-    this.render();
     this.bindKeys();
+    this.render();
+    this.clock = setInterval(() => {
+      this.animate();
+    }, 1000);
+  }
+
+  animate() {
+    if (!this.board.gameOver()) {
+      this.render();
+      this.board.updateBoard();
+    } else {
+      clearInterval(this.clock);
+      alert('Goodbye snake :(');
+    }
   }
 
   render() {
@@ -28,6 +41,11 @@ class View {
     });
   }
 
+  handleKey(e, dir) {
+    this.board.snake.setDir(dir);
+    e.preventDefault();
+  }
+
   bindKeys() {
     $(document).keydown((e) => {
       const charCode = e.keyCode || e.which;
@@ -35,23 +53,21 @@ class View {
       switch(charCode) {
         case 38:
         case 87:
-          this.board.snake.setDir('up');
+          this.handleKey(e, 'up');
           break;
         case 40:
         case 83:
-          this.board.snake.setDir('down');
+          this.handleKey(e, 'down');
           break;
         case 37:
         case 65:
-          this.board.snake.setDir('left');
+          this.handleKey(e, 'left');
           break;
         case 39:
         case 68:
-          this.board.snake.setDir('right');
+          this.handleKey(e, 'right');
           break;
       }
-
-      e.preventDefault();
     });
   }
 }
