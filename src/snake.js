@@ -22,19 +22,19 @@ class Snake {
   }
 
   setDir(dir) {
-    const dirStr = this.dir.join('');
+    const dirStr = this.dir.join(' ');
 
     switch(dir) {
       case 'up':
       case 'down':
-        if ([dirs.right.join(''), dirs.left.join('')].includes(dirStr)) {
+        if ([dirs.right.join(' '), dirs.left.join(' ')].includes(dirStr)) {
           this.dir = dirs[dir];
         }
 
         break;
       case 'right':
       case 'left':
-        if ([dirs.up.join(''), dirs.down.join('')].includes(dirStr)) {
+        if ([dirs.up.join(' '), dirs.down.join(' ')].includes(dirStr)) {
           this.dir = dirs[dir];
         }
   

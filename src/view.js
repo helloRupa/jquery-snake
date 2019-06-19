@@ -1,19 +1,24 @@
 const Board = require('./board');
+const frameRate = 120;
 
 class View {
-  constructor($el) {
+  constructor($el, $score) {
     this.$display = $el;
+    this.$score = $score;
     this.board = new Board();
+
     this.bindKeys();
     this.render();
+
     this.clock = setInterval(() => {
       this.animate();
-    }, 500);
+    }, frameRate);
   }
 
   animate() {
     if (!this.board.gameOver()) {
       this.render();
+      this.updateScore();
       this.board.updateBoard();
     } else {
       clearInterval(this.clock);
@@ -39,6 +44,10 @@ class View {
 
       this.$display.append($ul);
     });
+  }
+
+  updateScore() {
+    this.$score.text(this.board.appleCount * 10);
   }
 
   handleKey(e, dir) {

@@ -7,14 +7,15 @@ class Board {
     this.board = this.emptyBoard();
     this.snake = new Snake.Snake(Board.snakeLocation());
     this.apple = this.applePos();
-    this.setupBoard();
+    this.appleCount = 0;
+    this.placeItems();
   }
 
   emptyBoard() {
     return Array(pixels).fill(null).map(row => Array(pixels).fill(null));
   }
 
-  setupBoard() {
+  placeItems() {
     this.placeSnake();
     this.placeApple();
   }
@@ -25,8 +26,7 @@ class Board {
     this.eatApple();
 
     if (!this.gameOver()) {
-      this.placeSnake();
-      this.placeApple();
+      this.placeItems();
     }
   }
 
@@ -48,10 +48,10 @@ class Board {
   }
 
   applePos() {
-    const snakeBits = this.snake.segments.map(coords => coords.join(''));
+    const snakeBits = this.snake.segments.map(coords => coords.join(' '));
     let pos = Board.randomLocation();
 
-    while (snakeBits.includes(pos.join(''))) {
+    while (snakeBits.includes(pos.join(' '))) {
       pos = Board.randomLocation();
     }
 
@@ -62,6 +62,7 @@ class Board {
     if (Board.sameLoc(this.snake.segments[0], this.apple)) {
       this.snake.grow();
       this.apple = this.applePos();
+      this.appleCount++;
     }
   }
 
@@ -88,7 +89,7 @@ class Board {
   }
 
   static sameLoc(pos1, pos2) {
-    return pos1.join('') === pos2.join('');
+    return pos1.join(' ') === pos2.join(' ');
   }
 
   // Never start game with snake on edge cuz kindness
