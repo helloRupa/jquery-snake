@@ -91,9 +91,9 @@
   !*** ./src/board.js ***!
   \**********************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("// const Snake = require('./snake');\nconst pixels = 20;\n\nclass Board {\n  constructor() {\n    this.board = Array(pixels).fill(null).map(row => Array(pixels).fill(null));\n    // this.snake = new Snake(Snake.randomDirection());\n    this.setupBoard();\n  }\n\n  setupBoard() {\n    const snakeLoc = Board.randomLocation();\n    let appleLoc = Board.randomLocation();\n\n    while (appleLoc.join('') === snakeLoc.join('')) {\n      appleLoc = Board.randomLocation();\n    }\n\n    this.placeSnake(snakeLoc);\n    this.placeApple(appleLoc);\n  }\n\n  placeSnake(pos) {\n    const [y, x] = pos;\n\n    this.board[y][x] = 'S';\n  }\n\n  placeApple(pos) {\n    const [y, x] = pos;\n\n    this.board[y][x] = 'A';\n  }\n\n  static randomLocation() {\n    return [this.randomVal(), this.randomVal()];\n  }\n\n  static randomVal() {\n    return Math.floor(Math.random() * pixels);\n  }\n}\n\nmodule.exports = Board;\n\n\n//# sourceURL=webpack:///./src/board.js?");
+eval("const Snake = __webpack_require__(/*! ./snake */ \"./src/snake.js\");\nconst pixels = 20;\n\nclass Board {\n  constructor() {\n    this.board = Array(pixels).fill(null).map(row => Array(pixels).fill(null));\n    this.snake = new Snake(Board.snakeLocation());\n    this.setupBoard();\n  }\n\n  setupBoard() {\n    let appleLoc = Board.randomLocation();\n\n    while (appleLoc.join('') === this.snake.head.join('')) {\n      appleLoc = Board.randomLocation();\n    }\n\n    this.placeSnake(this.snake.head);\n    this.placeApple(appleLoc);\n  }\n\n  placeSnake(pos) {\n    const [y, x] = pos;\n\n    this.board[y][x] = 'S';\n  }\n\n  placeApple(pos) {\n    const [y, x] = pos;\n\n    this.board[y][x] = 'A';\n  }\n\n  // Never start game with snake on edge\n  static snakeLocation() {\n    let [y, x] = this.randomLocation();\n    const limits = [0, pixels - 1];\n\n    while (limits.includes(y) || limits.includes(x)) {\n      [y, x] = this.randomLocation();\n    }\n\n    return [y, x];\n  }\n\n  static randomLocation() {\n    return [this.randomVal(), this.randomVal()];\n  }\n\n  static randomVal() {\n    return Math.floor(Math.random() * pixels);\n  }\n}\n\nmodule.exports = Board;\n\n\n//# sourceURL=webpack:///./src/board.js?");
 
 /***/ }),
 
@@ -115,7 +115,7 @@ eval("const View = __webpack_require__(/*! ./view */ \"./src/view.js\");\nconst 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("const dirs = ['N', 'S', 'W', 'E'];\n\nclass Snake {\n  constructor(dir) {\n    this.dir = dir;\n    this.size = 1;\n  }\n\n  static randomDirection() {\n    const choice = Math.floor(Math.random() * dirs.length);\n    return dirs[choice];\n  }\n}\n\nmodule.exports = Snake;\n\n\n//# sourceURL=webpack:///./src/snake.js?");
+eval("// Up, Down, Left, Right\nconst dirs = [[-1, 0], [1, 0], [0, -1], [0, 1]];\n\nclass Snake {\n  constructor(pos) {\n    this.dir = Snake.randomDirection();\n    this.head = pos;\n    this.size = 1;\n  }\n\n  static randomDirection() {\n    const choice = Math.floor(Math.random() * dirs.length);\n    return dirs[choice];\n  }\n}\n\nmodule.exports = Snake;\n\n\n//# sourceURL=webpack:///./src/snake.js?");
 
 /***/ }),
 
