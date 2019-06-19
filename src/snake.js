@@ -16,19 +16,31 @@ class Snake {
 
   move() {
     this.head = [this.head[0] + this.dir[0], this.head[1] + this.dir[1]];
-
-    // is move going to be successful?
-    // return this.hitWall();
   }
 
-  // hitWall() {
-  //   const limits = Board.getLimits();
-
-  //   return limits.includes(this.head[0]) || limits.includes(this.head[1]);
-  // }
-
   setDir(dir) {
-    this.dir = dirs[dir];
+    const dirStr = this.dir.join('');
+
+    switch(dir) {
+      case 'up':
+      case 'down':
+        if ([dirs.right.join(''), dirs.left.join('')].includes(dirStr)) {
+          this.dir = dirs[dir];
+        }
+
+        break;
+      case 'right':
+      case 'left':
+        if ([dirs.up.join(''), dirs.down.join('')].includes(dirStr)) {
+          this.dir = dirs[dir];
+        }
+  
+        break;
+    }
+  }
+
+  grow() {
+    
   }
 }
 

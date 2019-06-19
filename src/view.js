@@ -8,7 +8,7 @@ class View {
     this.render();
     this.clock = setInterval(() => {
       this.animate();
-    }, 1000);
+    }, 500);
   }
 
   animate() {
