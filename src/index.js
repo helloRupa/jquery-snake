@@ -1,10 +1,17 @@
 const View = require('./view');
 
 $(() => {
-  let view = new View($('#game'), $('#score'), $('#page-title'));
+  const buttons = {
+    up: $('#up'),
+    down: $('#down'),
+    left: $('#left'),
+    right: $('#right')
+  };
+
+  let view = new View($('#game'), $('#score'), $('#page-title'), buttons);
 
   $('#new-game').on('click', () => { 
     view.clearView();
-    view = new View($('#game'), $('#score'), $('#page-title')); 
+    view = new View($('#game'), $('#score'), $('#page-title'), buttons); 
   });
 });

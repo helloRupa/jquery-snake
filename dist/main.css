@@ -21,7 +21,7 @@ html {
 }
 
 h1 {
-  font-size: 48px;
+  font-size: 32px;
   margin: 30px 0;
 }
 
@@ -42,16 +42,23 @@ li {
   background-color: #fff;
 }
 
+.buttons {
+  position: relative;
+}
+
 button {
   border: none;
-  background-color: green;
-  color: #fff;
   font-size: 16px;
-  padding: 5px 15px;
   cursor: pointer;
   border-radius: 6px;
-  margin: 20px;
   font-weight: bold;
+}
+
+#new-game {
+  background-color: green;
+  color: #fff;
+  padding: 5px 15px;
+  margin-top: 63px;
 }
 
 .snake {
@@ -70,6 +77,38 @@ strong {
   font-weight: 700;
   display: inline-block;
   margin-right: 10px;
+}
+
+.game-buttons {
+  position: relative;
+}
+
+.game-buttons button {
+  padding: 7px 10px;
+}
+
+#up {
+  position: absolute;
+  top: -20px;
+  right: 50px;
+}
+
+#left {
+  position: absolute;
+  top: 20px;
+  right: 85px;
+}
+
+#right {
+  position: absolute;
+  top: 20px;
+  right: 15px;
+}
+
+#down {
+  position: absolute;
+  top: 60px;
+  right: 50px;
 }
 
 @media all and (min-width: 800px) {

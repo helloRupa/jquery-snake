@@ -2,13 +2,15 @@ const Board = require('./board');
 const frameRate = 120;
 
 class View {
-  constructor($el, $score, $title) {
+  constructor($el, $score, $title, buttonsObj) {
     this.$display = $el;
     this.$score = $score;
     this.$title = $title;
+    this.buttons = buttonsObj;
     this.board = new Board();
 
     this.bindKeys();
+    this.bindButtons();
     this.render();
 
     $title.html('Snake');
@@ -55,7 +57,7 @@ class View {
   }
 
   updateScore() {
-    this.$score.text(this.board.appleCount * 10);
+    this.$score.text(this.board.appleCount * (10 + this.board.appleCount));
   }
 
   handleKey(e, dir) {
@@ -85,6 +87,14 @@ class View {
           this.handleKey(e, 'right');
           break;
       }
+    });
+  }
+
+  bindButtons() {
+    ['up', 'down', 'left', 'right'].forEach((dir) => {
+      this.buttons[dir].on('click', (e) => {
+        this.handleKey(e, dir);
+      });
     });
   }
 }
