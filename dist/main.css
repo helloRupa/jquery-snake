@@ -84,7 +84,8 @@ strong {
 }
 
 .game-buttons button {
-  padding: 7px 10px;
+  width: 35px;
+  height: 35px;
 }
 
 #up {
