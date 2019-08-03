@@ -92,7 +92,7 @@ class View {
 
   bindButtons() {
     ['up', 'down', 'left', 'right'].forEach((dir) => {
-      this.buttons[dir].on('click', (e) => {
+      this.buttons[dir].on('click touchstart', (e) => {
         this.handleKey(e, dir);
       });
     });
