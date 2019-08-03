@@ -1,5 +1,10 @@
 const View = require('./view');
 
 $(() => {
-  new View($('#game'), $('#score'));
+  let view = new View($('#game'), $('#score'), $('#page-title'));
+
+  $('#new-game').on('click', () => { 
+    view.clearView();
+    view = new View($('#game'), $('#score'), $('#page-title')); 
+  });
 });

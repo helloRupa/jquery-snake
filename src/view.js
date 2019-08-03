@@ -2,17 +2,25 @@ const Board = require('./board');
 const frameRate = 120;
 
 class View {
-  constructor($el, $score) {
+  constructor($el, $score, $title) {
     this.$display = $el;
     this.$score = $score;
+    this.$title = $title;
     this.board = new Board();
 
     this.bindKeys();
     this.render();
 
+    $title.html('Snake');
+
     this.clock = setInterval(() => {
       this.animate();
     }, frameRate);
+  }
+
+  clearView() {
+    clearInterval(this.clock);
+    this.$display.html('');
   }
 
   animate() {
@@ -22,7 +30,7 @@ class View {
       this.board.updateBoard();
     } else {
       clearInterval(this.clock);
-      alert('Goodbye snake :(');
+      this.$title.html('Goodbye Snake ☹');
     }
   }
 
