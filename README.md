@@ -12,4 +12,4 @@ Game ends when snake smashes its head into a wall or eats itself.
 ## Control
 WASD: Up, left, down, right, respectively.
 
-Arrow keys and on-screen buttons
+Arrow keys and on-screen buttons = mobile friendly

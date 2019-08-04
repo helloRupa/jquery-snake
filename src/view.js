@@ -15,9 +15,12 @@ class View {
 
     $title.html('Snake');
 
-    this.clock = setInterval(() => {
-      this.animate();
-    }, frameRate);
+    setTimeout(() => {
+      this.clock = setInterval(() => {
+        this.animate();
+      }, frameRate);
+    }, 250);
+    
   }
 
   clearView() {
